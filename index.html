@@ -10,10 +10,10 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: hsl(201, 76%, 51%);
         }
         h1 {
-            background-color: #0073e6;
+            background-color: #93a3b4;
             color: white;
             padding: 20px;
             margin: 0;
@@ -46,7 +46,7 @@
         }
         button {
             padding: 10px 20px;
-            background-color: #0073e6;
+            background-color: #175834;
             color: white;
             border: none;
             cursor: pointer;
@@ -55,36 +55,36 @@
             margin-top: 10px;
         }
         button:hover {
-            background-color: #005bb5;
+            background-color: rgb(1, 7, 12);
         }
     </style>
 </head>
 <body>
 
-    <h1>WeatherShop</h1>
-    <div class="top-nav">
+    <h1>Welcome to WeatherShop.</h1>
+    <!-- <div class="top-nav">
         <button onclick="openProfile()">Login / Signup</button>
         <button onclick="viewCart()">Cart (<span id="cart-count">0</span>)</button>
     </div>
-    
+     -->
 
     <div class="container">
-    <div id="notification-bar" class="notification">Weather alerts will appear here...</div>
+    <div id="notification-bar" class="notification"></div>
     
         <h2>Current Weather</h2>
-        <p id="weather-info">Fetching weather data...</p>
+        <p id="weather-info"></p>
         <p id="forecast-info"></p>
         <button onclick="getUserLocation()">Get Weather & Product Recommendations</button>
     </div>
 
     <div class="container">
-    <div id="notification-bar" class="notification">Weather alerts will appear here...</div>
+    <div id="notification-bar" class="notification"></div>
     
         <h2>Recommended Products</h2>
         <div class="product-list" id="product-list">
-    <p>Select products to add them to your cart!</p>
+    <!-- <p>Select products to add them to your cart!</p> -->
     
-            <p>No products yet. Click the button to get recommendations!</p>
+            <p> Click the button to get recommendations!</p>
         </div>
     </div>
 
