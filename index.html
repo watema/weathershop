@@ -61,9 +61,16 @@
 </head>
 <body>
 
-    <h1>Weather-Based Shopping</h1>
+    <h1>WeatherShop</h1>
+    <div class="top-nav">
+        <button onclick="openProfile()">Login / Signup</button>
+        <button onclick="viewCart()">Cart (<span id="cart-count">0</span>)</button>
+    </div>
+    
 
     <div class="container">
+    <div id="notification-bar" class="notification">Weather alerts will appear here...</div>
+    
         <h2>Current Weather</h2>
         <p id="weather-info">Fetching weather data...</p>
         <p id="forecast-info"></p>
@@ -71,13 +78,40 @@
     </div>
 
     <div class="container">
+    <div id="notification-bar" class="notification">Weather alerts will appear here...</div>
+    
         <h2>Recommended Products</h2>
         <div class="product-list" id="product-list">
+    <p>Select products to add them to your cart!</p>
+    
             <p>No products yet. Click the button to get recommendations!</p>
         </div>
     </div>
 
     <script>
+    function openProfile() {
+        alert("Profile feature coming soon!");
+    }
+
+    let cart = [];
+    function addToCart(product) {
+        cart.push(product);
+        document.getElementById("cart-count").innerText = cart.length;
+        alert(`${product} added to cart!`);
+    }
+
+    function viewCart() {
+        alert(cart.length > 0 ? `Your cart: ${cart.join(", ")}` : "Cart is empty!");
+    }
+
+    function updateWeatherIcon(condition) {
+        let icon = "🌥";
+        if (condition.includes("Cold")) icon = "❄️";
+        else if (condition.includes("Hot")) icon = "☀️";
+        else if (condition.includes("Rain")) icon = "🌧";
+        document.getElementById("weather-icon").innerText = icon;
+    }
+    
         async function getWeatherData(latitude, longitude) {
             const apiUrl1 = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
             const apiUrl2 = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,precipitation`;
@@ -96,16 +130,16 @@
                 const hourlyTemperature = data2.hourly.temperature_2m[0];
                 const precipitation = data2.hourly.precipitation[0];
 
-                document.getElementById("weather-info").innerHTML = 
+                document.getElementById("weather-info").innerHTML = `<span id="weather-icon"></span> ` + 
                     `Temperature: ${temperature}°C (${weatherCondition}), Wind Speed: ${windSpeed} km/h`;
                 
                 document.getElementById("forecast-info").innerHTML = 
                     `Upcoming Temp: ${hourlyTemperature}°C, Precipitation: ${precipitation} mm`;
 
-                recommendProducts(weatherCondition, precipitation);
+                updateWeatherIcon(weatherCondition); recommendProducts(weatherCondition, precipitation);
             } catch (error) {
                 console.error("Error fetching weather data:", error);
-                document.getElementById("weather-info").innerHTML = "Error fetching weather data!";
+                document.getElementById("weather-info").innerHTML = `<span id="weather-icon"></span> ` + "Error fetching weather data!";
             }
         }
 
@@ -129,7 +163,7 @@
             products.forEach(product => {
                 const li = document.createElement("div");
                 li.className = "product-item";
-                li.innerHTML = `<strong>${product}</strong>`;
+                li.innerHTML = `<strong>${product}</strong> <button onclick="addToCart('${product}')">Add to Cart</button>`;
                 productList.appendChild(li);
             });
         }
@@ -144,11 +178,11 @@
                     },
                     error => {
                         console.error("Error getting location:", error);
-                        document.getElementById("weather-info").innerHTML = "Location access denied!";
+                        document.getElementById("weather-info").innerHTML = `<span id="weather-icon"></span> ` + "Location access denied!";
                     }
                 );
             } else {
-                document.getElementById("weather-info").innerHTML = "Geolocation not supported!";
+                document.getElementById("weather-info").innerHTML = `<span id="weather-icon"></span> ` + "Geolocation not supported!";
             }
         }
     </script>
